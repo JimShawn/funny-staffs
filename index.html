@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="screen-orientation" content="portrait">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <title>朴朴3周年庆暨中秋晚宴抽奖小程序</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/wall.css">
+    <style type="text/css">
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        .result {
+            position: absolute;
+            width: 70%;
+            left: 15%;
+            top: 40%;
+            margin-top: -200px;
+            text-align: center;
+            padding: 10px;
+            display: none;
+            background-image: url("img/alert_bg.png");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            padding-bottom: 40px;
+        }
+
+        .result span {
+            display: inline-block;
+            /*font-size: 367px;*/
+            /*width: 850px;*/
+            background: #fff;
+            line-height: 430px;
+            color: #ffc000;
+            margin: 5px;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+            padding: 10px 0;
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            color: inherit;
+            font: inherit;
+            margin: 0;
+            border: none;
+        }
+
+        button {
+            overflow: visible;
+        }
+
+        button,
+        select {
+            text-transform: none;
+        }
+
+        button,
+        html input[type=button],
+        input[type=reset],
+        input[type=submit] {
+            -webkit-appearance: button;
+            cursor: pointer;
+        }
+
+        .pure-button {
+            display: inline-block;
+            zoom: 1;
+            line-height: normal;
+            white-space: nowrap;
+            vertical-align: middle;
+            text-align: center;
+            cursor: pointer;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .pure-button {
+            font-family: inherit;
+            font-size: 100%;
+            padding: .5em 1em;
+            color: #444;
+            color: rgba(0, 0, 0, .8);
+            border: 0 rgba(0, 0, 0, 0);
+            background-color: #E6E6E6;
+            text-decoration: none;
+            border-radius: 2px;
+        }
+
+        .pure-button:focus {
+            outline: 0
+        }
+
+        .pure-button-hover,
+        .pure-button:hover,
+        .pure-button:focus {
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000', GradientType=0);
+            background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0, 0, 0, .05)), to(rgba(0, 0, 0, .1)));
+            background-image: -webkit-linear-gradient(transparent, rgba(0, 0, 0, .05) 40%, rgba(0, 0, 0, .1));
+            background-image: -moz-linear-gradient(top, rgba(0, 0, 0, .05) 0, rgba(0, 0, 0, .1));
+            background-image: -o-linear-gradient(transparent, rgba(0, 0, 0, .05) 40%, rgba(0, 0, 0, .1));
+            background-image: linear-gradient(transparent, rgba(0, 0, 0, .05) 40%, rgba(0, 0, 0, .1));
+        }
+
+        .button-success,
+        .button-error,
+        .button-warning,
+        .button-secondary {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-success {
+            background: rgb(28, 184, 65);
+        }
+
+        .button-error {
+            background: #fdc57b;
+            color: #e60700;
+        }
+
+        .button-warning {
+            background: rgb(223, 117, 20);
+        }
+
+        .button-secondary {
+            background: rgb(66, 184, 221);
+        }
+
+        .tools {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            text-align: center;
+        }
+
+        .tools .pure-button {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 0;
+            text-align: center;
+            width: 50px;
+        }
+
+        .mask {
+            -webkit-filter: blur(5px);
+        }
+
+        #main {
+            -webkit-transition: all 1s;
+            transition: all 1s;
+        }
+
+        .pure-select {
+            height: 60px;
+            width: 60px;
+            margin-top: 10px;
+            margin-right: 8px;
+            vertical-align: top;
+            border-radius: 4px;
+            /* background-color: #fdc57b; */
+            background: url('img/prize_bg.png') bottom center no-repeat;
+            background-size: 100% 100%;
+            color: #7f1112;
+            font-weight: bolder;
+            padding: 0px 4px;
+            font-size: 11px;
+        }
+
+        /* .pure-select option{
+            color: #e60700;
+        } */
+
+        .rankList {
+            position: fixed;
+            top: 50px;
+            left: 10%;
+            width: 80%;
+            background-image: url('img/alert_bg.png');
+            background-size: 100% 100%;
+            border-radius: 6px;
+            padding: 20px 0;
+        }
+
+        .rank-table-box {
+            width: 50%;
+            margin: 20px auto 18px;
+            display: flex;
+            max-height: 400px;
+        }
+
+        .rank-table {
+            border-collapse: inherit;
+            width: 100%;
+        }
+
+        /*.rank-table:first-child{border-right: 2px solid #e60800;}*/
+        .hr_1 {
+            height: 100%;
+            width: 4px;
+            background-color: #e60800;
+            position: absolute;
+            top: 12px;
+            left: 33.3%;
+            margin-left: -1px;
+        }
+
+        .hr_2 {
+            height: 100%;
+            width: 4px;
+            background-color: #e60800;
+            position: absolute;
+            top: 12px;
+            left: 66.6%;
+            margin-left: -1px;
+        }
+
+        .rank-table tr {
+            text-align: center;
+            height: 55px;
+            line-height: 35px;
+            border-top: 1px solid #d7a86b;
+        }
+
+        .rank-table tr:first-child {
+            border-top: 0px;
+        }
+
+        .rank-table tr th {
+            color: #e60800;
+            text-align: center;
+        }
+
+        .prize_btn {
+            height: 60px;
+        }
+
+        .prize_btn_1 {
+            height: 70px;
+        }
+
+        .tools .pure-button.btn_count {
+            height: 43px;
+            width: 60px;
+            margin-top: 10px;
+            vertical-align: top;
+            font-weight: bolder;
+        }
+
+        .result_box {
+            padding: 40px 80px;
+            width: 100%;
+            height: 251px;
+            flex-wrap: wrap;
+        }
+
+        .result_box .result_content {
+
+            padding: 15px;
+            /* display: flex; */
+            /* justify-content: center; */
+            /* align-items: center; */
+            /* flex-flow: column; */
+            /* background-image: url(img/result_content.png); */
+            color: #fff;
+            /* background-size: 100% 100%; */
+            /* margin-right: 15px; */
+            font-size: 78px;
+            color: #7f1112;
+            font-weight: bolder;
+            line-height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main" class="wall"></div>
+    <div id="result" class="result">
+        <img src="img/congraduation.png" style="width: 100%;margin-top: 20px;">
+        <div class="result_box"></div>
+    </div>
+    <div id="tools" class="tools">
+        <select class="pure-select" v-model="prize" id="prizeType"
+            style="background-image:url('img/btn_{{prize}}.png') bottom center no-repeat; ">
+            <option value="1">幸运奖</option>
+            <option value="2">状元王中王</option>
+        </select>
+        <img v-on="click: getRankList" class="prize_btn" src="img/names_list.png">
+        <img v-on="click: closeRankDialog" class="prize_btn" src="img/btn_close1.png">
+        <img v-on="click: reset" class="prize_btn" src="img/btn_reset1.png">
+        <img v-on="click: toggle" class="prize_btn_1" src="img/btn_{{running?'stop1':'start1'}}.png">
+        <div class="rankList" v-if="isShowRank">
+            <img src="img/name_list_title.png" style="width: 100%;margin-top: 20px;">
+            <div class="rank-table-box">
+                <table class="rank-table">
+
+                    <tbody>
+                        <tr v-repeat="prizeTotalItem" style="font-size: 40px;font-weight: bold;color: #7f1112;">
+                            <td style="text-align: right;">{{prize?prize+' ：':''}}</td>
+                            <td style="text-align: left;">{{name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <audio id="audio" loop>
+        <source src="img/start.mp3" />
+        Your browser does not support the audio element.
+    </audio>
+    <script type="text/javascript" src="js/zepto.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/tagcanvas.js"></script>
+    <script type="text/javascript" src="js/member.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var prize = 1;
+            var lucky_items = JSON.parse(localStorage.getItem('lucky_items')) || [];
+            var king_items = JSON.parse(localStorage.getItem('king_items')) || [];
+            function compare(key) {
+                return function (a, b) {
+                    var value1 = a[key];
+                    var value2 = b[key];
+                    return value1 - value2;
+                }
+            }
+            switch (pageType * 1) {
+                case 1://fz1
+                    $('.wall').css('background-image', 'url(img/body_bg_fz.png)')
+                    $("#prizeType option[value='2']").text('状元王');
+                    break;
+                case 2://fz2
+                    $('.wall').css('background-image', 'url(img/bg_fz.jpg)')
+                    break;
+                case 3://xm
+                    $('.wall').css('background-image', 'url(img/body_bg.png)')
+                    // $("#prizeType option[value='1']").remove();
+                    break;
+                case 4://sz
+                    $('.wall').css('background-image', 'url(img/body_bg.png)')
+                    // $("#prizeType option[value='1']").remove();
+                    break;
+                default:
+                    break;
+            }
+            var speed = function () {
+                return [0.1 * Math.random() + 0.01, -(0.1 * Math.random() + 0.01)];
+            };
+            var createHTML = function () {
+                var html = ['<ul>'];
+                member_Item.forEach(function (item) {
+                    var color = (lucky_items.includes(item) || king_items.includes(item)) ? 'yellow' : '#fff';
+                    html.push('<li><a href="#" style="color: ' + color + ';">' + item + '</a></li>');
+                });
+                html.push('</ul>');
+                return html.join('');
+            };
+            var lottery = function (type) {
+                var total = member_Item.length;
+                var ret = -1;
+                if (type == 1) {//普通抽奖
+                    do {
+                        ret = Math.ceil(Math.random() * total) - 1;
+                    } while (lucky_items.includes(member_Item[ret]));
+                } else {
+                    do {
+                        ret = Math.ceil(Math.random() * total) - 1;
+                    } while (king_items.includes(member_Item[ret]));
+                }
+                if (type == 1) {//普通抽奖
+                    lucky_items.push(member_Item[ret]);
+                    window.localStorage.setItem('lucky_items', JSON.stringify(lucky_items))
+                } else {
+                    king_items.push(member_Item[ret]);
+                    window.localStorage.setItem('king_items', JSON.stringify(king_items))
+                }
+                return ret;
+            };
+            var canvas = document.createElement('canvas');
+            canvas.id = 'myCanvas';
+            canvas.width = document.body.offsetWidth;
+            canvas.height = document.body.offsetHeight;
+            document.getElementById('main').appendChild(canvas);
+            new Vue({
+                el: '#tools',
+                data: {
+                    prize: 1,//奖项
+                    running: false,
+                    isShowRank: false,
+                    prizeTotalItem: [],
+                    btns: [
+                        1
+                    ]
+                },
+                ready: function () {
+                    canvas.innerHTML = createHTML();
+                    TagCanvas.Start('myCanvas', '', {
+                        textColour: null,
+                        initial: speed(),
+                        dragControl: 1,
+                        textHeight: 20
+                    });
+                },
+                methods: {
+                    reset: function () {
+                        if (confirm('确定要重置么？所有之前的抽奖历史将被清除！')) {
+                            localStorage.clear();
+                            location.reload(true);
+                        }
+                    },
+
+                    closeRankDialog: function (num) {
+                        $('#result').css('display', 'none');
+                        document.getElementById('audio').pause();
+                        this.isShowRank = false;
+                    },
+                    toggle: function () {
+                        this.isShowRank = false;
+                        if (this.running) {
+                            TagCanvas.SetSpeed('myCanvas', speed());
+                            var ret = lottery(this.prize);
+                            $('#myCanvas a')[ret].style.color = 'yellow';
+                            $('#result').css('display', 'block');
+                            var html = '<div class="result_content"><div>' + member_Item[ret] + '</div></div>';
+
+                            $('#result .result_box').html(html);
+                            TagCanvas.Reload('myCanvas');
+                            document.getElementById('audio').src = 'img/end.mp3';
+                            document.getElementById('audio').play();
+                            setTimeout(function () {
+                                localStorage.setItem(new Date().toString(), JSON.stringify(ret));
+                                //                            $('#main').addClass('mask');
+                            }, 300);
+                        } else {
+                            $('#result').css('display', 'none');
+                            //                        $('#main').removeClass('mask');
+                            document.getElementById('audio').play();
+                            TagCanvas.SetSpeed('myCanvas', [5, 1]);
+                        }
+                        this.running = !this.running;
+                    },
+                    getRankList: function () {
+                        $('#result').css('display', 'none');
+                        this.isShowRank = true;
+                        this.prizeTotalItem = [];
+                        var lucky_items_str = localStorage.getItem('lucky_items');
+                        var lucky_items_arr = eval('(' + lucky_items_str + ')') || [];
+                        var king_items_str = localStorage.getItem('king_items');
+                        var king_items_arr = eval('(' + king_items_str + ')') || [];
+                        for (let l = 0; l < lucky_items_arr.length; l++) {
+                            this.prizeTotalItem.push({ name: lucky_items_arr[l], prize: '幸运奖' });
+
+                        }
+                        for (let l = 0; l < king_items_arr.length; l++) {
+                            
+                            this.prizeTotalItem.push({ name: king_items_arr[l], prize: pageType * 1==1?'状元王':'状元王中王' });
+
+                        }
+                        for (var i = 0; i < (10 - this.prizeTotalItem.length); i++) {
+                            this.prizeTotalItem.push({ name: '', prize: '' });
+                        }
+
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>
